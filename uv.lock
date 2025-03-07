@@ -811,6 +811,7 @@ dependencies = [
     { name = "beautifulsoup4" },
     { name = "crawl4ai" },
     { name = "fastapi", extra = ["standard"] },
+    { name = "python-dotenv" },
 ]
 
 [package.metadata]
@@ -818,6 +819,7 @@ requires-dist = [
     { name = "beautifulsoup4", specifier = ">=4.13.3" },
     { name = "crawl4ai", specifier = ">=0.5.0.post2" },
     { name = "fastapi", extras = ["standard"], specifier = ">=0.115.11" },
+    { name = "python-dotenv", specifier = ">=1.0.1" },
 ]
 
 [[package]]

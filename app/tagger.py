@@ -1,5 +1,8 @@
+import os
+from typing import cast
+
 import requests
-import json
+from crawl4ai.models import StringCompatibleMarkdown
 
 PROMPT_TEMPLATE = """
 {content}
@@ -31,17 +34,31 @@ Examples:
 Return only a comma-separated list of tags with no additional formatting or explanation.
 """
 
-response = requests.post(
-    url="https://openrouter.ai/api/v1/chat/completions",
-    headers={
-        "Authorization": "Bearer <OPENROUTER_API_KEY>",
-        "HTTP-Referer": "<YOUR_SITE_URL>",  # Optional. Site URL for rankings on openrouter.ai.
-        "X-Title": "<YOUR_SITE_NAME>",  # Optional. Site title for rankings on openrouter.ai.
-    },
-    data=json.dumps(
-        {
-            "model": "openai/gpt-4o",  # Optional
-            "messages": [{"role": "user", "content": "What is the meaning of life?"}],
-        }
-    ),
-)
+
+def tag(content: StringCompatibleMarkdown):
+    try:
+        prompt = PROMPT_TEMPLATE.format(content=content)
+
+        response = requests.post(
+            url="https://openrouter.ai/api/v1/chat/completions",
+            headers={
+                "Authorization": f"Bearer {os.getenv('OPENROUTER_API_KEY')}",
+                # "HTTP-Referer": os.getenv("SITE_URL", ""),
+                # "X-Title": os.getenv("SITE_NAME", ""),
+            },
+            json={
+                "model": "meta-llama/llama-3.3-70b-instruct:free",
+                "messages": [{"role": "user", "content": prompt}],
+            },
+        )
+
+        response.raise_for_status()
+
+        tags_str = cast(
+            str, response.json()["choices"][0]["message"]["content"]
+        ).strip()
+
+        return [t.strip() for t in tags_str.split(",")], None
+
+    except requests.HTTPError as e:
+        return None, {"status": e.response.status_code, "message": e.response.text}

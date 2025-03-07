@@ -33,9 +33,12 @@ def get_meta_image(soup: BeautifulSoup, url: str):
 
 
 def parse(html: str, url: str):
-    soup = BeautifulSoup(html, "html.parser")
+    try:
+        soup = BeautifulSoup(html, "html.parser")
 
-    favicon = get_favicon(soup, url)
-    meta_image = get_meta_image(soup, url)
+        favicon = get_favicon(soup, url)
+        meta_image = get_meta_image(soup, url)
 
-    return {"favicon": favicon, "meta_image": meta_image}
+        return {"favicon": favicon, "meta_image": meta_image}, None
+    except Exception as e:
+        return None, {"status": 500, "message": str(e)}
