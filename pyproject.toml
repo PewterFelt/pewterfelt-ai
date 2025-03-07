@@ -1,5 +1,5 @@
 [project]
-name = "pewterfelt-crawler"
+name = "pewterfelt-ai"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -13,3 +13,4 @@ dependencies = [
 
 [tool.basedpyright]
 reportMissingTypeStubs = false
+reportCallInDefaultInitializer = false

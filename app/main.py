@@ -1,14 +1,15 @@
 from dotenv import load_dotenv
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
 from pydantic import BaseModel
 
 from app.crawler import crawl
 from app.parser import parse
+from app.security import verify_token
 from app.tagger import tag
 
 load_dotenv()  # pyright: ignore[reportUnusedCallResult]
 
-app = FastAPI()
+app = FastAPI(dependencies=[Depends(verify_token)])
 
 
 class UrlRequest(BaseModel):
