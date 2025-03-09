@@ -804,7 +804,7 @@ wheels = [
 ]
 
 [[package]]
-name = "pewterfelt-crawler"
+name = "pewterfelt-ai"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
@@ -812,6 +812,7 @@ dependencies = [
     { name = "crawl4ai" },
     { name = "fastapi", extra = ["standard"] },
     { name = "python-dotenv" },
+    { name = "valkey-glide" },
 ]
 
 [package.metadata]
@@ -820,6 +821,7 @@ requires-dist = [
     { name = "crawl4ai", specifier = ">=0.5.0.post2" },
     { name = "fastapi", extras = ["standard"], specifier = ">=0.115.11" },
     { name = "python-dotenv", specifier = ">=1.0.1" },
+    { name = "valkey-glide", specifier = ">=1.3.1" },
 ]
 
 [[package]]
@@ -898,6 +900,20 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/42/78/9432542a35d944abeca9e02927a0de38cd7a298466d8ffa171536e2381c3/propcache-0.3.0-cp313-cp313t-win32.whl", hash = "sha256:0c3e893c4464ebd751b44ae76c12c5f5c1e4f6cbd6fbf67e3783cd93ad221863", size = 42252 },
     { url = "https://files.pythonhosted.org/packages/6f/45/960365f4f8978f48ebb56b1127adf33a49f2e69ecd46ac1f46d6cf78a79d/propcache-0.3.0-cp313-cp313t-win_amd64.whl", hash = "sha256:75e872573220d1ee2305b35c9813626e620768248425f58798413e9c39741f46", size = 46425 },
     { url = "https://files.pythonhosted.org/packages/b5/35/6c4c6fc8774a9e3629cd750dc24a7a4fb090a25ccd5c3246d127b70f9e22/propcache-0.3.0-py3-none-any.whl", hash = "sha256:67dda3c7325691c2081510e92c561f465ba61b975f481735aefdfc845d2cd043", size = 12101 },
+]
+
+[[package]]
+name = "protobuf"
+version = "6.30.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/53/6a/2629bb3529e5bdfbd6c4608ff5c7d942cd4beae85793f84ba543aab2548a/protobuf-6.30.0.tar.gz", hash = "sha256:852b675d276a7d028f660da075af1841c768618f76b90af771a8e2c29e6f5965", size = 429239 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/aa/76/8b1cbf762d98b09fcb29bbc6eca97dc6e1cd865b97a49c443aa23f1a9f82/protobuf-6.30.0-cp310-abi3-win32.whl", hash = "sha256:7337d76d8efe65ee09ee566b47b5914c517190196f414e5418fa236dfd1aed3e", size = 419141 },
+    { url = "https://files.pythonhosted.org/packages/57/50/2ea2fb4533321438f5106723c70c303529ba184540e619ebe75e790d402e/protobuf-6.30.0-cp310-abi3-win_amd64.whl", hash = "sha256:9b33d51cc95a7ec4f407004c8b744330b6911a37a782e2629c67e1e8ac41318f", size = 430995 },
+    { url = "https://files.pythonhosted.org/packages/a1/7d/a7dfa7aa3deda114920b1ed57c0026e85a976e74658db2784a0443510252/protobuf-6.30.0-cp39-abi3-macosx_10_9_universal2.whl", hash = "sha256:52d4bb6fe76005860e1d0b8bfa126f5c97c19cc82704961f60718f50be16942d", size = 417570 },
+    { url = "https://files.pythonhosted.org/packages/11/87/a9c7b020c4072dc34e3a2a3cde69366ffc623afff0e7f10f4e5275aaec01/protobuf-6.30.0-cp39-abi3-manylinux2014_aarch64.whl", hash = "sha256:7940ab4dfd60d514b2e1d3161549ea7aed5be37d53bafde16001ac470a3e202b", size = 317310 },
+    { url = "https://files.pythonhosted.org/packages/95/66/424db2262723781dc94208ff9ce201df2f44f18a46fbff3c067812c6b5b9/protobuf-6.30.0-cp39-abi3-manylinux2014_x86_64.whl", hash = "sha256:d79bf6a202a536b192b7e8d295d7eece0c86fbd9b583d147faf8cfeff46bf598", size = 316203 },
+    { url = "https://files.pythonhosted.org/packages/51/6f/21c2b7de96c3051f847a4a88a12fdf015ed6b7d50fc131fb101a739bd7a5/protobuf-6.30.0-py3-none-any.whl", hash = "sha256:e5ef216ea061b262b8994cb6b7d6637a4fb27b3fb4d8e216a6040c0b93bd10d7", size = 167054 },
 ]
 
 [[package]]
@@ -1346,6 +1362,19 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/d2/19/f5b78616566ea68edd42aacaf645adbf71fbd83fc52281fba555dc27e3f1/uvloop-0.21.0-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:f3df876acd7ec037a3d005b3ab85a7e4110422e4d9c1571d4fc89b0fc41b6816", size = 4701068 },
     { url = "https://files.pythonhosted.org/packages/47/57/66f061ee118f413cd22a656de622925097170b9380b30091b78ea0c6ea75/uvloop-0.21.0-cp313-cp313-musllinux_1_2_aarch64.whl", hash = "sha256:bd53ecc9a0f3d87ab847503c2e1552b690362e005ab54e8a48ba97da3924c0dc", size = 4454428 },
     { url = "https://files.pythonhosted.org/packages/63/9a/0962b05b308494e3202d3f794a6e85abe471fe3cafdbcf95c2e8c713aabd/uvloop-0.21.0-cp313-cp313-musllinux_1_2_x86_64.whl", hash = "sha256:a5c39f217ab3c663dc699c04cbd50c13813e31d917642d459fdcec07555cc553", size = 4660018 },
+]
+
+[[package]]
+name = "valkey-glide"
+version = "1.3.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "protobuf" },
+]
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/99/11/4139013615e98602ae50273b4b450c5ccf7648a0029c5e70a02fcb33b1a2/valkey_glide-1.3.1-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:24b1c380cad77527b9107bd73cd105fd1ec338879099d2109d9f40009db697fa", size = 2191913 },
+    { url = "https://files.pythonhosted.org/packages/a2/f5/ca14e7d8ae5904f193391d0cfc0241c1f085b5407deca0e1e3e867548818/valkey_glide-1.3.1-cp313-cp313-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:15b199f3120f87ee67194480b3f876a4a9c07ec6fe67ad1db437aac2c9b5ad7b", size = 2237411 },
+    { url = "https://files.pythonhosted.org/packages/f0/32/d8a429f24811a5ce442a615a91f901d8dc9c36f833bd0edbf0c57e5c0f0b/valkey_glide-1.3.1-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:2c1a47e67a42f9b357737cbfe4933c733df43e963074c0a937b7597a960ae3a1", size = 2352018 },
 ]
 
 [[package]]

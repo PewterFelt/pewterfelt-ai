@@ -1,0 +1,22 @@
+services:
+  web:
+    build: .
+    ports:
+      - "80:80"
+
+  valkey:
+    image: valkey/valkey:latest
+    environment:
+      - VALKEY_AOF_ENABLED=no # Disable append-only file persistence
+      - VALKEY_RDB_POLICY_DISABLED=yes # Disable snapshot persistence
+      - VALKEY_TTL=2592000 # 30-day expiration (30*24*60*60 seconds)
+      - VALKEY_MAXMEMORY=1gb # Optional memory limit
+      - VALKEY_MAXMEMORY_POLICY=allkeys-lru # Evict least recently used when full
+    ports:
+      - "6379:6379"
+    command: valkey-server --save "" --appendonly no
+    volumes:
+      - valkey_data:/data
+
+volumes:
+  valkey_data:
