@@ -10,4 +10,4 @@ jobs:
     steps:
       - name: Ping service to keep it alive
         run: |
-          curl -X GET https://pewterfelt-ai.onrender.com/api/ping
+          curl -X GET -H "Authorization: Bearer ${{ secrets.API_TOKEN }}" https://pewterfelt-ai.onrender.com/api/ping
