@@ -10,8 +10,8 @@ from crawl4ai import (
 
 
 async def crawl(url: str):
-    browser_conf = BrowserConfig(headless=True, verbose=True)  # pyright: ignore[reportArgumentType]
-    config = CrawlerRunConfig(  # pyright: ignore[reportArgumentType]
+    browser_conf = BrowserConfig(headless=True, verbose=True)
+    config = CrawlerRunConfig(
         # cache_mode=CacheMode.BYPASS,
         cache_mode=CacheMode.ENABLED,
         word_count_threshold=10,
@@ -21,10 +21,13 @@ async def crawl(url: str):
         process_iframes=True,
     )
 
-    async with AsyncWebCrawler(config=browser_conf) as crawler:  # pyright: ignore[reportArgumentType]
+    async with AsyncWebCrawler(config=browser_conf) as crawler:
         result = cast(
             CrawlResult,
-            await crawler.arun(url=url, config=config),  # pyright: ignore[reportUnknownMemberType]
+            cast(
+                object,
+                await crawler.arun(url=url, config=config),  # pyright: ignore[reportUnknownMemberType]
+            ),
         )
         if not result.success:
             return None, {"status": result.status_code, "message": result.error_message}
