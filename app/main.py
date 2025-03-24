@@ -40,3 +40,8 @@ async def tag_url(request: UrlRequest):
     response_data = {"tags": tags, "metadata": metadata}
 
     return response_data
+
+
+@app.get("/api/ping")
+async def ping():
+    return {"message": "healthy"}
