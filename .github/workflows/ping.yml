@@ -11,4 +11,5 @@ jobs:
 
     steps:
       - name: Ping Render
-        run: curl -I https://pewterfelt-ai.onrender.com/api/ping
+        run: |
+          curl -X GET -H "Authorization: Bearer ${{ secrets.API_TOKEN }}" https://pewterfelt-ai.onrender.com/api/ping
