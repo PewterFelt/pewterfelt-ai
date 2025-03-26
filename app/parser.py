@@ -32,13 +32,29 @@ def get_meta_image(soup: BeautifulSoup, url: str):
     return meta_image
 
 
+def get_title(soup: BeautifulSoup):
+    title = None
+    title_tag = cast(Tag, soup.find("title"))
+
+    if title_tag and title_tag.string:
+        title = title_tag.string.strip()
+
+    if not title:
+        og_title_tag = cast(Tag, soup.find("meta", property="og:title"))
+        if og_title_tag and og_title_tag.get("content"):
+            title = cast(NavigableString, og_title_tag.get("content")).strip()
+
+    return title
+
+
 def parse(html: str, url: str):
     try:
         soup = BeautifulSoup(html, "html.parser")
 
         favicon = get_favicon(soup, url)
         meta_image = get_meta_image(soup, url)
+        title = get_title(soup)
 
-        return {"favicon": favicon, "meta_image": meta_image}, None
+        return {"favicon": favicon, "meta_image": meta_image, "title": title}, None
     except Exception as e:
         return None, {"status": 500, "message": str(e)}
