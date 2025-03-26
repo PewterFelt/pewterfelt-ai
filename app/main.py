@@ -22,7 +22,7 @@ async def tag_url(request: UrlRequest, response: Response):
     result, crawl_error = await crawl(request.url)
     if not result or not result.markdown:
         if crawl_error:
-            response.status_code = crawl_error["status"]
+            response.status_code = int(crawl_error["status"] or 500)
             return {"error": crawl_error["message"]}
         response.status_code = 500
         return {"error": "Failed to crawl URL"}
@@ -30,7 +30,7 @@ async def tag_url(request: UrlRequest, response: Response):
     tags, tag_error = tag(result.markdown)
     if not tags:
         if tag_error:
-            response.status_code = tag_error["status"]
+            response.status_code = int(tag_error["status"])
             return {"error": tag_error["message"]}
         response.status_code = 500
         return {"error": "Failed to tag content"}
@@ -38,7 +38,7 @@ async def tag_url(request: UrlRequest, response: Response):
     metadata, parse_error = parse(result.html, request.url)
     if not metadata:
         if parse_error:
-            response.status_code = parse_error["status"]
+            response.status_code = int(parse_error["status"])
             return {"error": parse_error["message"]}
         response.status_code = 500
         return {"error": "Failed to parse metadata"}
@@ -48,6 +48,6 @@ async def tag_url(request: UrlRequest, response: Response):
     return response_data
 
 
-@app.get("/api/ping")
+@app.api_route("/api/ping", methods=["GET", "HEAD"])
 async def ping():
     return {"message": "healthy"}
