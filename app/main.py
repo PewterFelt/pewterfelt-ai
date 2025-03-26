@@ -1,5 +1,5 @@
 from dotenv import load_dotenv
-from fastapi import Depends, FastAPI
+from fastapi import Depends, FastAPI, Response
 from pydantic import BaseModel
 
 from app.crawler import crawl
@@ -18,24 +18,30 @@ class UrlRequest(BaseModel):
 
 
 @app.post("/api/tag")
-async def tag_url(request: UrlRequest):
+async def tag_url(request: UrlRequest, response: Response):
     result, crawl_error = await crawl(request.url)
     if not result or not result.markdown:
         if crawl_error:
-            return {"error": crawl_error["message"]}, crawl_error["status"]
-        return {"error": "Failed to crawl URL"}, 500
+            response.status_code = crawl_error["status"]
+            return {"error": crawl_error["message"]}
+        response.status_code = 500
+        return {"error": "Failed to crawl URL"}
 
     tags, tag_error = tag(result.markdown)
     if not tags:
         if tag_error:
-            return {"error": tag_error["message"]}, tag_error["status"]
-        return {"error": "Failed to tag content"}, 500
+            response.status_code = tag_error["status"]
+            return {"error": tag_error["message"]}
+        response.status_code = 500
+        return {"error": "Failed to tag content"}
 
     metadata, parse_error = parse(result.html, request.url)
     if not metadata:
         if parse_error:
-            return {"error": parse_error["message"]}, parse_error["status"]
-        return {"error": "Failed to parse metadata"}, 500
+            response.status_code = parse_error["status"]
+            return {"error": parse_error["message"]}
+        response.status_code = 500
+        return {"error": "Failed to parse metadata"}
 
     response_data = {"tags": tags, "metadata": metadata}
 

@@ -47,12 +47,28 @@ def tag(content: StringCompatibleMarkdown):
                 # "X-Title": os.getenv("SITE_NAME", ""),
             },
             json={
-                "model": "meta-llama/llama-3.3-70b-instruct:free",
+                "model": "meta-llama/llama-3.3-70b-instruct",
                 "messages": [{"role": "user", "content": prompt}],
             },
         )
 
         response.raise_for_status()
+
+        if "error" in response.json():
+            import json
+
+            error_json = response.json()["error"]
+            raw_message = error_json["metadata"]["raw"]
+
+            try:
+                parsed_message = json.loads(raw_message)
+            except json.JSONDecodeError:
+                parsed_message = raw_message
+
+            return None, {
+                "status": error_json["code"],
+                "message": parsed_message,
+            }
 
         tags_str = cast(
             str, response.json()["choices"][0]["message"]["content"]
