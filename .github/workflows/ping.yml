@@ -1,0 +1,14 @@
+name: Ping Render
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Ping Render
+        run: curl -I https://pewterfelt-ai.onrender.com/api/ping
