@@ -15,6 +15,7 @@ app = FastAPI(dependencies=[Depends(verify_token)])
 
 class UrlRequest(BaseModel):
     url: str
+    tags: list[str]
 
 
 @app.post("/api/tag")
@@ -27,7 +28,7 @@ async def tag_url(request: UrlRequest, response: Response):
         response.status_code = 500
         return {"error": "Failed to crawl URL"}
 
-    tags, tag_error = tag(result.markdown)
+    tags, tag_error = tag(result.markdown, request.tags)
     if not tags:
         if tag_error:
             response.status_code = int(tag_error["status"])

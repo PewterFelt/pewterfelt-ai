@@ -15,7 +15,8 @@ Analyze the content and generate up to five relevant tags that best represent it
 2. Use lower case with spaces (e.g., "machine learning")
 3. Use uppercase without dots for acronyms (e.g., "UI", "CLI", "AI", "ETF")
 4. Have no spaces around the commas, only for compound meanings (e.g., "machine learning", "web development", "climate change")
-4. Maximum 5 tags, minimum 2
+5. Maximum 8 tags, minimum 5
+6. If any of the user's existing tags ({existing_tags}) are relevant to the content, include them in the generated tags.
 
 * * *
 
@@ -35,9 +36,9 @@ Return only a comma-separated list of tags with no additional formatting or expl
 """
 
 
-def tag(content: StringCompatibleMarkdown):
+def tag(content: StringCompatibleMarkdown, tags: list[str]):
     try:
-        prompt = PROMPT_TEMPLATE.format(content=content)
+        prompt = PROMPT_TEMPLATE.format(content=content, existing_tags=", ".join(tags))
 
         response = requests.post(
             url="https://openrouter.ai/api/v1/chat/completions",
@@ -57,13 +58,13 @@ def tag(content: StringCompatibleMarkdown):
         if "error" in response.json():
             import json
 
-            error_json = response.json()["error"]
-            raw_message = error_json["metadata"]["raw"]
+            error_json = response.json()["error"]  # pyright: ignore[reportAny]
+            raw_message = error_json["metadata"]["raw"]  # pyright: ignore[reportAny]
 
             try:
-                parsed_message = json.loads(raw_message)
+                parsed_message = json.loads(raw_message)  # pyright: ignore[reportAny]
             except json.JSONDecodeError:
-                parsed_message = raw_message
+                parsed_message = raw_message  # pyright: ignore[reportAny]
 
             return None, {
                 "status": error_json["code"],
