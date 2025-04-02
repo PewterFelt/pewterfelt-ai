@@ -16,7 +16,7 @@ Analyze the content and generate up to five relevant tags that best represent it
 3. Use uppercase without dots for acronyms (e.g., "UI", "CLI", "AI", "ETF")
 4. Have no spaces around the commas, only for compound meanings (e.g., "machine learning", "web development", "climate change")
 5. Maximum 8 tags, minimum 5
-6. If any of the user's existing tags ({existing_tags}) are relevant to the content, include them in the generated tags.
+{existing_tags_section}
 
 * * *
 
@@ -38,7 +38,16 @@ Return only a comma-separated list of tags with no additional formatting or expl
 
 def tag(content: StringCompatibleMarkdown, tags: list[str]):
     try:
-        prompt = PROMPT_TEMPLATE.format(content=content, existing_tags=", ".join(tags))
+        existing_tags_section = (
+            f"6. If any of the user's existing tags ({', '.join(tags)}) are relevant to the content, include them in the generated tags."
+            if len(tags)
+            else ""
+        )
+
+        prompt = PROMPT_TEMPLATE.format(
+            content=content,
+            existing_tags_section=existing_tags_section,
+        )
 
         response = requests.post(
             url="https://openrouter.ai/api/v1/chat/completions",
