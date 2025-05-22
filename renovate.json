@@ -2,7 +2,6 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended",
-    "npm:unpublishSafe",
     "schedule:nonOfficeHours"
   ],
   "timezone": "Europe/Amsterdam",
@@ -14,17 +13,6 @@
     "automerge": true
   },
   "packageRules": [
-    {
-      "matchDepTypes": [
-        "devDependencies"
-      ],
-      "matchPackageNames": [
-        "lint",
-        "prettier",
-        "globals"
-      ],
-      "automerge": true
-    },
     {
       "matchUpdateTypes": [
         "minor",
