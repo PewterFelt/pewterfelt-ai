@@ -44,9 +44,7 @@ async def tag_url(request: UrlRequest, response: Response):
         response.status_code = 500
         return {"error": "Failed to parse metadata"}
 
-    response_data = {"tags": tags, "metadata": metadata}
-
-    return response_data
+    return {"tags": tags, "metadata": metadata, "content": result.markdown}
 
 
 @app.api_route("/api/ping", methods=["GET", "HEAD"])
