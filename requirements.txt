@@ -50,7 +50,7 @@ nltk==3.9.1
 numpy==2.2.6
 openai==1.82.0
 packaging==25.0
-pillow==10.4.0
+pillow==12.1.1
 playwright==1.52.0
 propcache==0.3.1
 psutil==7.0.0
