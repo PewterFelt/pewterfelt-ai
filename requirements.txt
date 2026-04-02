@@ -9,7 +9,7 @@ attrs==25.3.0
 beautifulsoup4==4.13.4
 certifi==2025.4.26
 cffi==1.17.1
-charset-normalizer==3.4.2
+charset-normalizer==3.4.7
 click==8.2.1
 colorama==0.4.6
 crawl4ai==0.5.0.post2
